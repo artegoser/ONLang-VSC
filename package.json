@@ -6,6 +6,9 @@
   "engines": {
     "vscode": "^1.70.0"
   },
+  "icon": "icon.png",
+  "publisher": "artegoser",
+  "repository": "https://github.com/artegoser/ONLang-VSC",
   "categories": [
     "Programming Languages",
     "Snippets"
