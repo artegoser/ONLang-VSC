@@ -1,0 +1,187 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "fileTypes": ["onlang"],
+  "name": "ONLang",
+  "patterns": [{ "include": "#comments" }, { "include": "#value" }],
+  "repository": {
+    "array": {
+      "begin": "\\[",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.array.begin.onlang" }
+      },
+      "end": "\\]",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.array.end.onlang" }
+      },
+      "name": "meta.structure.array.onlang",
+      "patterns": [
+        { "include": "#comments" },
+        { "include": "#value" },
+        {
+          "match": ",",
+          "name": "punctuation.separator.array.onlang"
+        },
+        {
+          "match": "[^\\s\\]]",
+          "name": "invalid.illegal.expected-array-separator.onlang"
+        }
+      ]
+    },
+    "constant": {
+      "match": "\\b(?:true|false|null|Infinity|NaN)\\b",
+      "name": "constant.language.onlang"
+    },
+    "infinity": {
+      "match": "(-)*\\b(?:Infinity|NaN)\\b",
+      "name": "constant.language.onlang"
+    },
+    "number": {
+      "patterns": [
+        {
+          "comment": "handles hexadecimal numbers",
+          "match": "(0x)[0-9a-fA-f]*",
+          "name": "constant.hex.numeric.onlang"
+        },
+        {
+          "comment": "handles integer and decimal numbers",
+          "match": "[+-.]?(?=[1-9]|0(?!\\d))\\d+(\\.\\d+)?([eE][+-]?\\d+)?",
+          "name": "constant.dec.numeric.onlang"
+        }
+      ]
+    },
+    "object": {
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.dictionary.begin.onlang" }
+      },
+      "comment": "a onlang object",
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.dictionary.end.onlang" }
+      },
+      "name": "meta.structure.dictionary.onlang",
+      "patterns": [
+        { "include": "#comments" },
+        {
+          "comment": "the onlang object key",
+          "include": "#key"
+        },
+        {
+          "begin": ":",
+          "beginCaptures": {
+            "0": { "name": "punctuation.separator.dictionary.key-value.onlang" }
+          },
+          "end": "(,)|(?=\\})",
+          "endCaptures": {
+            "1": { "name": "punctuation.separator.dictionary.pair.onlang" }
+          },
+          "name": "meta.structure.dictionary.value.onlang",
+          "patterns": [
+            {
+              "comment": "the onlang object value",
+              "include": "#value"
+            },
+            {
+              "match": "[^\\s,]",
+              "name": "invalid.illegal.expected-dictionary-separator.onlang"
+            }
+          ]
+        },
+        {
+          "match": "[^\\s\\}]",
+          "name": "invalid.illegal.expected-dictionary-separator.onlang"
+        }
+      ]
+    },
+    "stringSingle": {
+      "begin": "[']",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.onlang" }
+      },
+      "end": "[']",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.onlang" }
+      },
+      "name": "string.quoted.onlang",
+      "patterns": [
+        {
+          "match": "(?x:                # turn on extended mode\n                     \\\\                # a literal backslash\n                     (?:               # ...followed by...\n                       [\"\\\\/bfnrt]     # one of these characters\n                       |               # ...or...\n                       u               # a u\n                       [0-9a-fA-F]{4}  # and four hex digits\n                     )\n                   )",
+          "name": "constant.character.escape.onlang"
+        },
+        {
+          "match": "\\\\.",
+          "name": "invalid.illegal.unrecognized-string-escape.onlang"
+        }
+      ]
+    },
+    "stringDouble": {
+      "begin": "[\"]",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.onlang" }
+      },
+      "end": "[\"]",
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.onlang" }
+      },
+      "name": "string.quoted.onlang",
+      "patterns": [
+        {
+          "match": "(?x:                # turn on extended mode\n                     \\\\                # a literal backslash\n                     (?:               # ...followed by...\n                       [\"\\\\/bfnrt]     # one of these characters\n                       |               # ...or...\n                       u               # a u\n                       [0-9a-fA-F]{4}  # and four hex digits\n                     )\n                   )",
+          "name": "constant.character.escape.onlang"
+        },
+        {
+          "match": "\\\\.",
+          "name": "invalid.illegal.unrecognized-string-escape.onlang"
+        }
+      ]
+    },
+    "key": {
+      "name": "string.key.onlang",
+      "patterns": [
+        { "include": "#stringSingle" },
+        { "include": "#stringDouble" },
+        {
+          "match": "[a-zA-Z0-9_-]",
+          "name": "string.key.onlang"
+        }
+      ]
+    },
+    "value": {
+      "comment": "the 'value' diagram at http://json.org",
+      "patterns": [
+        { "include": "#constant" },
+        { "include": "#infinity" },
+        { "include": "#number" },
+        { "include": "#stringSingle" },
+        { "include": "#stringDouble" },
+        { "include": "#array" },
+        { "include": "#object" }
+      ]
+    },
+    "comments": {
+      "patterns": [
+        {
+          "match": "/{2}.*",
+          "name": "comment.single.onlang"
+        },
+        {
+          "begin": "/\\*\\*(?!/)",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.onlang" }
+          },
+          "end": "\\*/",
+          "name": "comment.block.documentation.onlang"
+        },
+        {
+          "begin": "/\\*",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.onlang" }
+          },
+          "end": "\\*/",
+          "name": "comment.block.onlang"
+        }
+      ]
+    }
+  },
+  "scopeName": "onlang"
+}

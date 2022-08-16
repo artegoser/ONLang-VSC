@@ -1,0 +1,53 @@
+{
+  "name": "onlang",
+  "displayName": "ONLang",
+  "description": "Extension to support ONLang, a language running on json",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "onlang",
+        "aliases": [
+          "ONLang",
+          "onlang"
+        ],
+        "extensions": [
+          ".onla"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "onlang",
+        "scopeName": "onlang",
+        "path": "./syntaxes/onlang.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "onlang",
+        "path": "./snippets/onlang.json"
+      },
+      {
+        "language": "json5",
+        "path": "./snippets/onlang.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./snippets/yaml.json"
+      },
+      {
+        "language": "json",
+        "path": "./snippets/json.json"
+      }
+    ]
+  }
+}
