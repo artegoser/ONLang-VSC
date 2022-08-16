@@ -6,7 +6,7 @@
   "engines": {
     "vscode": "^1.70.0"
   },
-  "icon": "icon.png",
+  "icon": "https://github.com/artegoser/ONLang-VSC/blob/master/icon.png?raw=true",
   "publisher": "artegoser",
   "repository": "https://github.com/artegoser/ONLang-VSC",
   "categories": [
