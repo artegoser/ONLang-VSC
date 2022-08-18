@@ -137,6 +137,11 @@
     ],
     "description": "Condition"
   },
+  "import": {
+    "prefix": "import",
+    "body": ["import:", "  path: ${1:path}", "  as: {2:name}"],
+    "description": "Condition"
+  },
   "if-body-else": {
     "prefix": "if-body-else",
     "body": [

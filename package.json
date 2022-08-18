@@ -2,7 +2,7 @@
   "name": "onlang",
   "displayName": "ONLang",
   "description": "Extension to support ONLang, a language running on json",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "engines": {
     "vscode": "^1.70.0"
   },
